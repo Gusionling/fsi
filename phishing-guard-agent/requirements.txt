@@ -1,0 +1,9 @@
+langchain==1.2.14
+langchain-community==0.4.1
+langchain-openai==1.1.12
+langgraph
+streamlit==1.56.0
+python-dotenv==1.2.2
+faiss-cpu==1.13.2
+pypdf
+pandas
