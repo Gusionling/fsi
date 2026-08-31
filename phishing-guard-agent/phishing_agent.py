@@ -12,6 +12,7 @@ import pandas as pd
 from langchain_community.document_loaders import PyPDFLoader
 from langchain_community.tools.tavily_search import TavilySearchResults
 from langchain_community.vectorstores import FAISS
+from langchain_core.messages import HumanMessage, SystemMessage
 from langchain_core.output_parsers import JsonOutputParser, StrOutputParser
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.runnables import RunnablePassthrough
@@ -257,12 +258,11 @@ class PhishingGuardAgent:
             f"--- 데이터/조회 결과 ---\n{state.get('data', '(없음)')}\n"
             f"--- 참고 문서/검색 결과 ---\n{state.get('context', '(없음)')}\n---"
         )
-        prompt = ChatPromptTemplate.from_messages([
-            ("system", system_message),
-            ("human", "{question}"),
-        ])
-        chain = prompt | self.llm | StrOutputParser()
-        generation = chain.invoke({"question": state["question"]})
+        messages = [
+            SystemMessage(content=system_message),
+            HumanMessage(content=state["question"]),
+        ]
+        generation = (self.llm | StrOutputParser()).invoke(messages)
         return {"question": state["question"], "generation": generation}
 
     def answer(self, state: State):
