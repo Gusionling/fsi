@@ -49,8 +49,14 @@ st.markdown(
 
 with st.sidebar:
     st.header("환경 설정 상태")
-    st.success("OpenAI API Key: 로드됨") if OPENAI_API_KEY else st.error("OpenAI API Key가 설정되지 않았습니다.")
-    st.success("Tavily API Key: 로드됨") if TAVILY_API_KEY else st.warning("Tavily API Key가 설정되지 않았습니다. (web_search 경로 비활성)")
+    if OPENAI_API_KEY:
+        st.success("OpenAI API Key: 로드됨")
+    else:
+        st.error("OpenAI API Key가 설정되지 않았습니다.")
+    if TAVILY_API_KEY:
+        st.success("Tavily API Key: 로드됨")
+    else:
+        st.warning("Tavily API Key가 설정되지 않았습니다. (web_search 경로 비활성)")
     st.caption("키는 로컬 `.env` 또는 Streamlit Cloud Secrets에서 자동으로 로드됩니다.")
 
     st.divider()
