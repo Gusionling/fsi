@@ -44,9 +44,14 @@ class PhishingGuardAgent:
         self,
         api_key: str,
         tavily_api_key: Optional[str] = None,
-        csv_path: str = "data/phishing_urls.csv",
-        pdf_path: str = "data/phishing_response_guide.pdf",
+        csv_path: str = None,
+        pdf_path: str = None,
     ) -> None:
+        _base = os.path.dirname(os.path.abspath(__file__))
+        if csv_path is None:
+            csv_path = os.path.join(_base, "data", "phishing_urls.csv")
+        if pdf_path is None:
+            pdf_path = os.path.join(_base, "data", "phishing_response_guide.pdf")
         self.llm = ChatOpenAI(model="gpt-4.1-mini", api_key=api_key)
         self.route_llm = ChatOpenAI(model="gpt-4.1-mini", api_key=api_key, temperature=0)
         self.embeddings = OpenAIEmbeddings(model="text-embedding-3-small", api_key=api_key)
