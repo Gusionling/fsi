@@ -7,18 +7,7 @@
 
 ---
 
-## 1. 과제 요구사항 대응표
-
-| 요구사항 | 충족 내용 |
-| --- | --- |
-| Conditional edge 5개 이상 | `phishing_agent.py`에 `add_conditional_edges` **5회** 호출 (CE1~CE5, 아래 4번 참고) |
-| 에이전트 node 5개 이상 | `router`, `url_data_query`, `email_check`, `guideline_rag`, `web_search_agent`, `risk_report`, `plain_answer` — **7개** |
-| 정형+비정형 데이터 (수업 데이터 제외) | 정형: `data/phishing_urls.csv` (신규 생성) / 비정형: `data/phishing_response_guide.pdf` (신규 생성) — 수업에서 쓴 `security_logs.csv`, `owasp_llm_top10_2025.pdf`와 무관 |
-| 웹 API 에이전트 1개 이상 | `web_search_agent` 노드 — Tavily Search API 사용 |
-
----
-
-## 2. 파일 구조
+## 1. 파일 구조
 
 ```
 phishing-guard-agent/
@@ -43,14 +32,12 @@ phishing-guard-agent/
   서브도메인 수, HTTPS 사용 여부, 도메인 나이 등)을 참고해 **직접 생성한 시뮬레이션 데이터**입니다.
   (수업에서 쓴 `security_logs.csv`와 동일하게, 통계적 특성을 반영한 합성 데이터 방식)
 - `phishing_response_guide.pdf`: 일반적으로 알려진 피싱·스미싱 대응 원칙을 이 프로젝트의 RAG
-  학습용으로 정리한 **참고 문서**입니다. 특정 기관의 공식 발간물이 아닙니다.
-- 두 파일 모두 `data/generate_*.py` 스크립트로 재생성할 수 있습니다.
-
+  학습용으로 정리한 **참고 문서**입니다.
 ---
 
-## 3. 실행 방법
+## 2. 실행 방법
 
-### 3.1 패키지 설치
+### 2.1 패키지 설치
 
 ```bash
 cd phishing-guard-agent
@@ -59,7 +46,7 @@ source .venv/bin/activate      # Windows: .venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-### 3.2 API 키 설정
+### 2.2 API 키 설정
 
 `.env.example`을 복사해 `.env`를 만들고 키를 채워주세요.
 
@@ -72,7 +59,7 @@ OPENAI_API_KEY=sk-...
 TAVILY_API_KEY=tvly-...
 ```
 
-### 3.3 데이터 생성 (최초 1회, 이미 포함되어 있으므로 선택사항)
+### 2.3 데이터 생성 (최초 1회, 이미 포함되어 있으므로 선택사항)
 
 ```bash
 cd data
@@ -81,7 +68,7 @@ python generate_guide_pdf.py
 cd ..
 ```
 
-### 3.4 앱 실행
+### 2.4 앱 실행
 
 ```bash
 streamlit run main.py
@@ -92,7 +79,7 @@ streamlit run main.py
 
 ---
 
-## 4. 그래프 구조
+## 3. 그래프 구조
 
 ![architecture](architecture.png)
 
@@ -154,7 +141,7 @@ plain_answer → END
 
 ---
 
-## 5. Streamlit Cloud 배포 방법
+## 4. Streamlit Cloud 배포 방법
 
 1. 이 폴더를 GitHub 리포지토리로 push
 2. [share.streamlit.io](https://share.streamlit.io) 에서 New app → 리포지토리 선택, Main file path에 `main.py` 지정
@@ -169,7 +156,7 @@ TAVILY_API_KEY = "tvly-..."
 
 ---
 
-## 6. 동작 확인용 질문 예시
+## 5. 동작 확인용 질문 예시
 
 | 질문 | 기대 경로 |
 | --- | --- |
